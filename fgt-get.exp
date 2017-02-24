@@ -1,0 +1,42 @@
+#!/usr/bin/expect -f
+
+# Set variables
+set hostip [lindex $argv 0]
+set hostname [lindex $argv 1]
+set username [lindex $argv 2]
+set password [lindex $argv 3]
+set logfile [lindex $argv 4]
+
+spawn ssh -o StrictHostKeyChecking=no $username\@$hostip
+
+expect {
+timeout { send_user "\nTimeout Exceeded - Check Host\n"; exit 1 }
+eof { send_user "\nSSH Connection To $hostname Failed\n"; exit 1 }
+"$hostname*#" {send "\n"}
+"*assword:" {
+send "$password\n"
+}
+}
+send "\n"
+expect "$hostname*#"
+
+log_user 0
+
+set timeout 6000
+
+log_file -noappend -a ${logfile}.conf
+send_user "Sending show full to $hostname"
+send "\r"
+expect "$hostname *#"
+
+send "show full\r"
+expect "$hostname *#"
+send "\r"
+expect "$hostname *#"
+
+log_file
+send_user "\n$hostname config  saved\n"
+
+
+send "exit\n"
+exit 0
