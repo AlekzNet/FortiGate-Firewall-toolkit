@@ -1,0 +1,47 @@
+#!/usr/bin/expect -f
+
+# Set variables
+set hostip [lindex $argv 0]
+set hostname [lindex $argv 1]
+set username [lindex $argv 2]
+set password [lindex $argv 3]
+set logfile [lindex $argv 4]
+
+set file "fgt-set.cmd"
+set fd [open "$file" r]
+set data [read $fd]
+close $fd
+set lines [split $data \n]
+
+spawn ssh -o StrictHostKeyChecking=no $username\@$hostip
+
+expect {
+timeout { send_user "\nTimeout Exceeded - Check Host\n"; exit 1 }
+eof { send_user "\nSSH Connection To $hostname Failed\n"; exit 1 }
+"$hostname*#" {send "\n"}
+"*assword:" {
+send "$password\n"
+}
+}
+send "\n"
+expect "$hostname*#"
+
+#log_user 0
+
+set timeout 6000
+
+log_file -a ${logfile}.log
+send_user "Sending commands to $hostname"
+send "\r"
+expect "$hostname *#"
+
+foreach line $lines {
+send "$line\r"
+send_user "$line sent \n"
+expect {}
+}
+log_file
+send_user "\n$hostname updated\n"
+
+send "exit\n"
+exit 0
