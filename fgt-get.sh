@@ -16,7 +16,7 @@ do
         set $fw
         mkdir -p $2
         OUTFILE=$2/$2.out
-        ./fgt.exp $1 $2 $USERNAME $PASSWD $OUTFILE
-#        ./fgt.exp $1 $2 $USERNAME $PASSWD $OUTFILE &
+        ./fgt-get.exp $1 $2 $USERNAME $PASSWD $OUTFILE
+#        ./fgt-get.exp $1 $2 $USERNAME $PASSWD $OUTFILE &
 #        sleep 10
 done < $FWS
