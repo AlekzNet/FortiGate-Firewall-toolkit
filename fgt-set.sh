@@ -10,10 +10,10 @@ PASSWD='my-password'
 #read -s -e PASSWD
 #echo -ne '\n'
 
-while read fw
+grep -v '^[     ]*#' $FWS | while read fw
 do
         set $fw
         mkdir -p $2
         OUTFILE=$2/$2.out
         ./fgt-set.exp $1 $2 $USERNAME $PASSWD $OUTFILE
-done < $FWS
+done
