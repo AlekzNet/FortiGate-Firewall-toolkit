@@ -37,9 +37,13 @@ expect "$hostname *#"
 
 foreach line $lines {
 send "$line\r"
-send_user "$line sent \n"
-expect {}
+expect "$hostname *#"
+send "\r"
+expect "$hostname *#"
 }
+send "\r"
+expect "$hostname *#"
+
 log_file
 send_user "\n$hostname updated\n"
 
