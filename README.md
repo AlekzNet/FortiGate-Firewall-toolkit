@@ -11,7 +11,7 @@ A set of programs to download, upload, convert, analyze and create a policy for 
 * fgt-set.sh - Shell script to remotely configure Fortigate firewalls
 * fgt-set.exp - Expect script to remotely configure Fortigate firewalls
 * fgt-set.cmd - commands to be remotely executed on Fortigate firewalls
-* [genacl.py](https://github.com/AlekzNet/Cisco-ASA-ACL-toolkit/blob/master/doc/genacl.md) - utility to generate ASA ACL's or FortiGate policy from a proto-policy. See https://github.com/AlekzNet/Cisco-ASA-ACL-toolkit
+* [genacl.py](https://github.com/AlekzNet/FortiGate-Firewall-toolkit/doc/genacl.md) - utility to generate FortiGate policy from a proto-policy. See also https://github.com/AlekzNet/Cisco-ASA-ACL-toolkit
 
 ## Requirements
 
